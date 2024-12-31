@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres:
+
+    container_name: Postgres_db
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgresql
+      POSTGRES_PASSWORD: postgresql
+      POSTGRES_DB: task
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: Pg_Admin
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - postgres
+
+  mongodb:
+    container_name: Mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
